@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans, Geist, Geist_Mono } from "next/font/google";
+import dns from 'dns'; 
+dns.setServers(['8.8.8.8', '8.8.4.4']);
 
 import "./globals.css";
 
