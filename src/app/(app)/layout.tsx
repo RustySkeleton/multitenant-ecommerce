@@ -4,6 +4,7 @@ import dns from 'dns';
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 
 import "./globals.css";
+import { TRPCReactProvider } from "@/trpc/client";
 
 const dmSans = DM_Sans({
   subsets:['latin'],
@@ -24,7 +25,11 @@ export default function RootLayout({
       lang="en"
       className={`${dmSans.className} antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <TRPCReactProvider>
+        {children}
+        </TRPCReactProvider>
+        </body>
     </html>
   );
 }
