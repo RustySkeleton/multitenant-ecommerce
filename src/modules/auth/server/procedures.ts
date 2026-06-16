@@ -1,14 +1,15 @@
 import z from "zod";
 
-import {headers as getHeaders,cookies as getCookies} from "next/headers";
+import {headers as getHeaders} from "next/headers";
 
 import {baseProcedure, createTRPCRouter} from "@/trpc/init"
 import { Category } from '@/payload-types';
 import { register } from "module";
 import { password } from "payload/shared";
 import { TRPCError } from "@trpc/server";
-import { AUTH_COOKIE } from "../constants";
+
 import { loginSchema, registerSchema } from "../schemas";
+import { generateAuthCookie } from "../utils";
 
 export const authRouter = createTRPCRouter({
     session: baseProcedure.query(async ({ctx})=>{
@@ -18,10 +19,7 @@ export const authRouter = createTRPCRouter({
 
         return session;
     }),
-    logout:baseProcedure.mutation(async()=>{
-        const cookies = await getCookies();
-        cookies.delete(AUTH_COOKIE);
-    }),
+    
     register:baseProcedure
         .input(registerSchema)
         .mutation(async ({input,ctx})=>{
@@ -65,18 +63,10 @@ export const authRouter = createTRPCRouter({
             });
            }
 
-           const cookies =await getCookies();
-           cookies.set({
-            name:AUTH_COOKIE,
+           await generateAuthCookie({
+            prefix:ctx.db.config.cookiePrefix,
             value:data.token,
-            httpOnly:true,
-            path:"/",
-            // sameSite:"none",
-            // domain:""
-            // TODO: Ensure Cross-domain cookie sharing
-            // funroad.com initial cookie
-            // anthem.funroad.com cookie doesn't exist here
-           });
+           })
         
         }),
 
@@ -98,19 +88,10 @@ export const authRouter = createTRPCRouter({
             });
            }
 
-           const cookies =await getCookies();
-           cookies.set({
-            name:AUTH_COOKIE,
+           await generateAuthCookie({
+            prefix:ctx.db.config.cookiePrefix,
             value:data.token,
-            httpOnly:true,
-            path:"/",
-            // sameSite:"none",
-            // domain:""
-            // TODO: Ensure Cross-domain cookie sharing
-            // funroad.com initial cookie
-            // anthem.funroad.com cookie doesn't exist here
-           });
-
+           })
            return data;
         }),
 });
