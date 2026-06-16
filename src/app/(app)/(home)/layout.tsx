@@ -1,8 +1,8 @@
 
 
-import { Footer } from "./footer";
-import { Navbar } from "./navbar";
-import { SearchFilters, SearchFiltersLoading } from "./search-filters";
+import { Footer } from "@/modules/home/ui/components/footer";
+import { Navbar } from "@/modules/home/ui/components/navbar";
+import { SearchFilters, SearchFiltersLoading } from "@/modules/home/ui/components/search-filters";
 import dns from 'dns'; 
 
 import { getQueryClient, trpc } from "@/trpc/server";
