@@ -3,7 +3,7 @@ import { getPayload } from 'payload';
 import config from "@payload-config";
 import superjson from 'superjson';
 import { cache } from 'react';
- 
+ import dns from 'dns'; dns.setServers(['8.8.8.8', '8.8.4.4']);
 export const createTRPCContext = cache(async () => {
   /**
    * @see: https://trpc.io/docs/server/context
