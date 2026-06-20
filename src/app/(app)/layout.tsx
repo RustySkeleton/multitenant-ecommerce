@@ -3,6 +3,9 @@ import { DM_Sans, Geist, Geist_Mono } from "next/font/google";
 import dns from 'dns'; 
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 
+import {NuqsAdapter} from "nuqs/adapters/next/app";
+
+
 import "./globals.css";
 import { TRPCReactProvider } from "@/trpc/client";
 import { Toaster } from "@/components/ui/sonner";
@@ -27,10 +30,12 @@ export default function RootLayout({
       className={`${dmSans.className} antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <NuqsAdapter>
         <TRPCReactProvider>
         {children}
         <Toaster/>
         </TRPCReactProvider>
+        </NuqsAdapter>
         </body>
     </html>
   );
