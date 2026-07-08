@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { 
+import {
     Breadcrumb,
     BreadcrumbItem,
     BreadcrumbLink,
@@ -20,40 +20,40 @@ export const BreadcrumbNavigation = ({
     activeCategoryName,
     activeCategory,
     activeSubcategoryName,
-}:Props)=>{
-    if (!activeCategoryName || activeCategory==="all") return null;
+}: Props) => {
+    if (!activeCategoryName || activeCategory === "all") return null;
 
-    return(
+    return (
         <Breadcrumb>
             <BreadcrumbList>
-                {activeSubcategoryName?(
+                {activeSubcategoryName ? (
                     <>
                         <BreadcrumbItem>
-                            <BreadcrumbLink 
-                            asChild
-                            className="text-xl font-medium underline text-primary"
+                            <BreadcrumbLink
+                                asChild
+                                className="text-xl font-medium underline text-primary"
                             >
-                                <Link href ={`/${activeCategory}`}>
-                                {activeCategoryName}
+                                <Link href={`/${activeCategory}`}>
+                                    {activeCategoryName}
                                 </Link>
                             </BreadcrumbLink>
                         </BreadcrumbItem>
-                        <BreadcrumbSeparator  className="text-primary font-medium text-xl">
+                        <BreadcrumbSeparator className="text-primary font-medium text-xl">
                             /
                         </BreadcrumbSeparator>
                         <BreadcrumbItem>
-                            <BreadcrumbPage 
-                            className="text-xl font-medium"
+                            <BreadcrumbPage
+                                className="text-xl font-medium"
                             >
                                 {activeSubcategoryName}
 
                             </BreadcrumbPage>
                         </BreadcrumbItem>
                     </>
-                ):(
+                ) : (
                     <BreadcrumbItem>
-                        <BreadcrumbPage 
-                        className="text-xl font-medium"
+                        <BreadcrumbPage
+                            className="text-xl font-medium"
                         >
                             {activeCategoryName}
 

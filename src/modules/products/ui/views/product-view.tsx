@@ -17,25 +17,25 @@ import { Fragment } from "react/jsx-runtime";
 // import { CartButton } from "../components/cart-button";
 
 const CartButton = dynamic(
-    ()=>import("../components/cart-button").then(
-        (mod)=>mod.CartButton,
+    () => import("../components/cart-button").then(
+        (mod) => mod.CartButton,
     ),
     {
-        ssr:false,
-        loading: ()=> <Button disabled className="flex-1 bg-pink-400">Add to cart</Button>
+        ssr: false,
+        loading: () => <Button disabled className="flex-1 bg-pink-400">Add to cart</Button>
     },
 );
 
-interface ProductViewProps{
-    productId:string;
-    tenantSlug:string;
+interface ProductViewProps {
+    productId: string;
+    tenantSlug: string;
 };
 
-export const ProductView=({productId,tenantSlug}:ProductViewProps)=>{
+export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
     const trpc = useTRPC();
-    const {data}=useSuspenseQuery(trpc.products.getOne.queryOptions({id:productId}));
+    const { data } = useSuspenseQuery(trpc.products.getOne.queryOptions({ id: productId }));
 
-    return(
+    return (
         <div className="px-4 lg:px-12 py-18">
             <div className="border rounded-sm bg-white overflow-hidden">
                 <div className="relative aspect-[3.9] border-b">
@@ -77,7 +77,7 @@ export const ProductView=({productId,tenantSlug}:ProductViewProps)=>{
 
                             <div className="hidden lg:flex px-6 py-4 items-center justify-center">
                                 <div className="flex items-center gap-1">
-                                    <StarRating 
+                                    <StarRating
                                         rating={3}
                                         iconClassName="size-4"
                                     />
@@ -87,7 +87,7 @@ export const ProductView=({productId,tenantSlug}:ProductViewProps)=>{
 
                         <div className="block lg:hidden px-6 py-4 items-center justify-center border-b">
                             <div className="flex items-center gap-1">
-                                <StarRating 
+                                <StarRating
                                     rating={3}
                                     iconClassName="size-4"
                                 />
@@ -96,11 +96,11 @@ export const ProductView=({productId,tenantSlug}:ProductViewProps)=>{
                                 </p>
                             </div>
                         </div>
-                        
+
                         <div className="p-6">
-                            {data.description?(
+                            {data.description ? (
                                 <p>{data.description}</p>
-                            ):(
+                            ) : (
                                 <p className="font-medium text-muted-foreground italic">
                                     No Description Provided
                                 </p>
@@ -119,36 +119,36 @@ export const ProductView=({productId,tenantSlug}:ProductViewProps)=>{
                                     <Button
                                         className="size-12"
                                         variant="elevated"
-                                        onClick={()=>{}}
+                                        onClick={() => { }}
                                         disabled={false}
                                     >
-                                        <LinkIcon/>
-                                    </Button> 
+                                        <LinkIcon />
+                                    </Button>
                                 </div>
                                 <p className="text-center font-medium">
-                                    {data.refundPolicy==="no-refunds"
-                                        ?"No refunds"
-                                        :`${data.refundPolicy} money back guarantee`    
+                                    {data.refundPolicy === "no-refunds"
+                                        ? "No refunds"
+                                        : `${data.refundPolicy} money back guarantee`
                                     }
 
                                 </p>
                             </div>
-                            
+
                             <div className="p-6">
                                 <div className="flex items-center justify-between">
                                     <h3 className="text-xl font-medium">Ratings</h3>
                                     <div className="flex items-center gap-x-1 font-medium">
-                                        <StarIcon className="size-4 fill-black"/>
+                                        <StarIcon className="size-4 fill-black" />
                                         <p>({5})</p>
                                         <p className="text-base">{5} ratings</p>
                                     </div>
                                 </div>
-                                <div 
+                                <div
                                     className="grid grid-cols-[auto_1fr_auto] gap-3 mt-4"
                                 >
-                                    {[5,4,3,2,1].map((stars)=>(
+                                    {[5, 4, 3, 2, 1].map((stars) => (
                                         <Fragment key={stars}>
-                                            <div className="font-medium">{stars} {stars===1?"star":"stars"}</div>
+                                            <div className="font-medium">{stars} {stars === 1 ? "star" : "stars"}</div>
                                             <Progress
                                                 value={5}
                                                 className="h-[1lh]"

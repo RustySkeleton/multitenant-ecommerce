@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { DM_Sans, Geist, Geist_Mono } from "next/font/google";
-import dns from 'dns'; 
+import dns from 'dns';
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 
-import {NuqsAdapter} from "nuqs/adapters/next/app";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 
 import "./globals.css";
@@ -11,7 +11,7 @@ import { TRPCReactProvider } from "@/trpc/client";
 import { Toaster } from "@/components/ui/sonner";
 
 const dmSans = DM_Sans({
-  subsets:['latin'],
+  subsets: ['latin'],
 })
 
 export const metadata: Metadata = {
@@ -31,12 +31,12 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <NuqsAdapter>
-        <TRPCReactProvider>
-        {children}
-        <Toaster/>
-        </TRPCReactProvider>
+          <TRPCReactProvider>
+            {children}
+            <Toaster />
+          </TRPCReactProvider>
         </NuqsAdapter>
-        </body>
+      </body>
     </html>
   );
 }

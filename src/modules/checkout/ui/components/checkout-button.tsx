@@ -5,24 +5,24 @@ import { useCart } from "../../hooks/use-cart";
 import Link from "next/link";
 import { ShoppingCartIcon } from "lucide-react";
 
-interface CheckoutButtonProps{
-    className?:string;
-    hideIfEmpty?:boolean;
-    tenantSlug:string;
+interface CheckoutButtonProps {
+    className?: string;
+    hideIfEmpty?: boolean;
+    tenantSlug: string;
 };
 
 export const CheckoutButton = ({
     className,
     hideIfEmpty,
     tenantSlug,
-}:CheckoutButtonProps)=>{
-    const {totalItems}=useCart(tenantSlug);
-    if(hideIfEmpty && totalItems===0)return null;
+}: CheckoutButtonProps) => {
+    const { totalItems } = useCart(tenantSlug);
+    if (hideIfEmpty && totalItems === 0) return null;
 
-    return(
-        <Button variant="elevated" asChild className={cn("bg-white",className)}>
+    return (
+        <Button variant="elevated" asChild className={cn("bg-white", className)}>
             <Link href={`${generateTenantURL(tenantSlug)}/checkout`}>
-                <ShoppingCartIcon/> {totalItems>0?totalItems:""}
+                <ShoppingCartIcon /> {totalItems > 0 ? totalItems : ""}
             </Link>
         </Button>
     )

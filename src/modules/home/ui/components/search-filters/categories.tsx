@@ -13,11 +13,11 @@ import { CategoriesSidebar } from "./categories-sidebar";
 import { CategoriesGetManyOutput } from "@/modules/categories/types";
 import { useParams } from "next/navigation";
 
-interface Props{
-    data:CategoriesGetManyOutput;
+interface Props {
+    data: CategoriesGetManyOutput;
 };
 
-export const Categories =({data}:Props)=>{
+export const Categories = ({ data }: Props) => {
     const params = useParams();
 
 
@@ -25,56 +25,56 @@ export const Categories =({data}:Props)=>{
     const measureRef = useRef<HTMLDivElement>(null);
     const viewAllRef = useRef<HTMLDivElement>(null);
 
-    const [visibleCount, setVisibleCount] =useState(data.length);
-    const [isAnyHovered, setIsAnyHovered]= useState(false);
-    const [isSidebarOpen, setIsSidebarOpen]=useState(false);
+    const [visibleCount, setVisibleCount] = useState(data.length);
+    const [isAnyHovered, setIsAnyHovered] = useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-    const categoryParam=params.category as string | undefined;
+    const categoryParam = params.category as string | undefined;
 
-    const activeCategory=categoryParam || "all";
+    const activeCategory = categoryParam || "all";
 
-    const activeCategoryIndex = data.findIndex((cat)=>cat.slug === activeCategory);
-    const isActiveCategoryHidden = activeCategoryIndex>=visibleCount && activeCategoryIndex!==-1;
+    const activeCategoryIndex = data.findIndex((cat) => cat.slug === activeCategory);
+    const isActiveCategoryHidden = activeCategoryIndex >= visibleCount && activeCategoryIndex !== -1;
 
-    useEffect(()=>{
-         const calculateVisible =()=>{
+    useEffect(() => {
+        const calculateVisible = () => {
             if (!containerRef.current || !measureRef.current || !viewAllRef.current) return;
 
             const containerWidth = containerRef.current.offsetWidth;
-            const viewAllWidth=viewAllRef.current.offsetWidth;
-            const availableWidth = containerWidth-viewAllWidth;
+            const viewAllWidth = viewAllRef.current.offsetWidth;
+            const availableWidth = containerWidth - viewAllWidth;
 
-            const items=Array.from(measureRef.current.children);
-            let totalWidth=0;
-            let visible =0;
-            for (const item of items){
-                const width=item.getBoundingClientRect().width;
-                if(totalWidth+width>availableWidth) break;
-                totalWidth+=width;
+            const items = Array.from(measureRef.current.children);
+            let totalWidth = 0;
+            let visible = 0;
+            for (const item of items) {
+                const width = item.getBoundingClientRect().width;
+                if (totalWidth + width > availableWidth) break;
+                totalWidth += width;
                 visible++;
 
             }
             setVisibleCount(visible);
-         };
-         const resizeObserver = new ResizeObserver(calculateVisible);
-         resizeObserver.observe(containerRef.current!);
-         return()=>resizeObserver.disconnect();
-    },[data.length]);
-    return(
+        };
+        const resizeObserver = new ResizeObserver(calculateVisible);
+        resizeObserver.observe(containerRef.current!);
+        return () => resizeObserver.disconnect();
+    }, [data.length]);
+    return (
         <div className="relative w-full">
             {/* Categories Sidebar */}
-            <CategoriesSidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen}/>
+            <CategoriesSidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen} />
             {/* Hidden Div To Measure All Items */}
-            <div 
+            <div
                 ref={measureRef}
                 className="absolute opacity-0 pointer-events-none flex"
-                style={{position:"fixed", top:-9999, left:-9999}}
+                style={{ position: "fixed", top: -9999, left: -9999 }}
             >
-                {data.map((category)=>(
+                {data.map((category) => (
                     <div key={category.id}>
                         <CategoryDropDown
                             category={category}
-                            isActive={activeCategory===category.slug}
+                            isActive={activeCategory === category.slug}
                             isNavigationHovered={false}
                         />
 
@@ -84,37 +84,37 @@ export const Categories =({data}:Props)=>{
 
             {/* Visible Items */}
             <div
-                ref={containerRef} 
+                ref={containerRef}
                 className="flex flex-nowrap items-center"
-                onMouseEnter={()=>setIsAnyHovered(true)}
-                onMouseLeave={()=>setIsAnyHovered(false)}
+                onMouseEnter={() => setIsAnyHovered(true)}
+                onMouseLeave={() => setIsAnyHovered(false)}
             >
-            {/* TODO: Hardcode "All" button */}
-                {data.slice(0,visibleCount).map((category)=>(
+                {/* TODO: Hardcode "All" button */}
+                {data.slice(0, visibleCount).map((category) => (
                     <div key={category.id}>
                         <CategoryDropDown
                             category={category}
-                            isActive={activeCategory===category.slug}
+                            isActive={activeCategory === category.slug}
                             isNavigationHovered={isAnyHovered}
                         />
 
                     </div>
                 ))}
 
-            <div ref={viewAllRef} className="shrink-0">
-                <Button 
-                variant="elevated"
-                className={cn("h-11 px-4 bg-transparent border-transparent rounded-full hover:bg-white hover:border-primary text-black",
+                <div ref={viewAllRef} className="shrink-0">
+                    <Button
+                        variant="elevated"
+                        className={cn("h-11 px-4 bg-transparent border-transparent rounded-full hover:bg-white hover:border-primary text-black",
                             isActiveCategoryHidden && !isAnyHovered && "bg-white border-primary",)}
-                onClick={()=>setIsSidebarOpen(true)}
-                >
-                    View All
-                    <ListFilterIcon className="ml-2"/>
-                </Button>
+                        onClick={() => setIsSidebarOpen(true)}
+                    >
+                        View All
+                        <ListFilterIcon className="ml-2" />
+                    </Button>
 
+                </div>
             </div>
-            </div>
-            
+
         </div>
     );
 };
