@@ -6,12 +6,12 @@ import { Suspense } from "react";
 
 interface LayoutProps {
     children: React.ReactNode;
-    params: Promise <{slug:string}>;
+    params: Promise<{ slug: string }>;
 }
 
-const Layout =async ({children,params}:LayoutProps)=>{
-    const {slug}=await params;
-    const queryClient=getQueryClient();
+const Layout = async ({ children, params }: LayoutProps) => {
+    const { slug } = await params;
+    const queryClient = getQueryClient();
     void queryClient.prefetchQuery(trpc.tenants.getOne.queryOptions({
         slug,
     }));
@@ -19,8 +19,8 @@ const Layout =async ({children,params}:LayoutProps)=>{
     return (
         <div className="min-h-screen bg-[#F4F4F0] flex flex-col">
             <HydrationBoundary state={dehydrate(queryClient)}>
-                <Suspense fallback={<NavbarSkeleton/>}>
-                <Navbar slug={slug}/>
+                <Suspense fallback={<NavbarSkeleton />}>
+                    <Navbar slug={slug} />
                 </Suspense>
             </HydrationBoundary>
             <div className="flex-1">
@@ -28,7 +28,7 @@ const Layout =async ({children,params}:LayoutProps)=>{
                     {children}
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </div>
     );
 };

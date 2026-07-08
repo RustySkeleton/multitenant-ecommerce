@@ -9,30 +9,30 @@ import { ProductListView } from "@/modules/products/ui/views/product-list-view";
 import { DEFAULT_LIMIT } from "@/constants";
 
 
-interface Props{
-    params:Promise<{
-        category:string;
+interface Props {
+    params: Promise<{
+        category: string;
     }>,
-    searchParams:Promise<SearchParams>;
+    searchParams: Promise<SearchParams>;
 };
 
 
-const Page = async ({params, searchParams }:Props)=>{
-    const {category} = await params;
+const Page = async ({ params, searchParams }: Props) => {
+    const { category } = await params;
     const filters = await loadProductFilters(searchParams);
 
-    const queryClient=getQueryClient();
+    const queryClient = getQueryClient();
     void queryClient.prefetchInfiniteQuery(trpc.products.getMany.infiniteQueryOptions({
         category,
         ...filters,
-        limit:DEFAULT_LIMIT,
+        limit: DEFAULT_LIMIT,
     }));
 
-  
+
     return (
         <div>
             <HydrationBoundary state={dehydrate(queryClient)}>
-                <ProductListView category={category}/>
+                <ProductListView category={category} />
 
             </HydrationBoundary>
         </div>

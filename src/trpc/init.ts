@@ -3,14 +3,14 @@ import { getPayload } from 'payload';
 import config from "@payload-config";
 import superjson from 'superjson';
 import { cache } from 'react';
- import dns from 'dns'; dns.setServers(['8.8.8.8', '8.8.4.4']);
+import dns from 'dns'; dns.setServers(['8.8.8.8', '8.8.4.4']);
 export const createTRPCContext = cache(async () => {
   /**
    * @see: https://trpc.io/docs/server/context
    */
   return { userId: 'user_123' };
 });
- 
+
 // Avoid exporting the entire t-object
 // since it's not very descriptive.
 // For instance, the use of a t variable
@@ -21,12 +21,12 @@ const t = initTRPC.create({
    */
   transformer: superjson,
 });
- 
+
 // Base router and procedure helpers
 export const createTRPCRouter = t.router;
 export const createCallerFactory = t.createCallerFactory;
-export const baseProcedure = t.procedure.use(async ({ next })=>{
-  const payload = await getPayload({config});
+export const baseProcedure = t.procedure.use(async ({ next }) => {
+  const payload = await getPayload({ config });
 
-  return next({ctx: {db:payload}});
+  return next({ ctx: { db: payload } });
 });

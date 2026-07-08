@@ -9,44 +9,44 @@ export const Tenants: CollectionConfig = {
     // Email added by default
     // Add more fields as needed
     {
-      name:"name",
-      required:true,
-      type:"text",
-      label:"Store Name",
-      admin:{
-        description:"This is the name of the store"
+      name: "name",
+      required: true,
+      type: "text",
+      label: "Store Name",
+      admin: {
+        description: "This is the name of the store"
       },
     },
     {
-        name:"slug",
-        type:"text",
-        index:true,
-        required:true,
-        unique:true,
-        admin:{
-            description:"This is the subdomain for the store (e.g. [slug].funroad.com)"
-        },
+      name: "slug",
+      type: "text",
+      index: true,
+      required: true,
+      unique: true,
+      admin: {
+        description: "This is the subdomain for the store (e.g. [slug].funroad.com)"
+      },
     },
     {
-        name:"image",
-        type:"upload",
-        relationTo:"media",
+      name: "image",
+      type: "upload",
+      relationTo: "media",
     },
     {
-        name:"stripeAccountId",
-        type:"text",
-        required:true,
-        admin:{
-            readOnly:true,
-        },
+      name: "stripeAccountId",
+      type: "text",
+      required: true,
+      admin: {
+        readOnly: true,
+      },
     },
     {
-        name:"stripeDetailsSubmitted",
-        type:"checkbox",
-        admin:{
-            readOnly:true,
-            description:"You cannot create products until you submit your Stripe details"
-        },
+      name: "stripeDetailsSubmitted",
+      type: "checkbox",
+      admin: {
+        readOnly: true,
+        description: "You cannot create products until you submit your Stripe details"
+      },
     },
 
   ],

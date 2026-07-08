@@ -3,18 +3,18 @@
 import { Footer } from "@/modules/home/ui/components/footer";
 import { Navbar } from "@/modules/home/ui/components/navbar";
 import { SearchFilters, SearchFiltersLoading } from "@/modules/home/ui/components/search-filters";
-import dns from 'dns'; 
+import dns from 'dns';
 
 import { getQueryClient, trpc } from "@/trpc/server";
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { Suspense } from "react";
 
 dns.setServers(['8.8.8.8', '8.8.4.4']);
-interface Props{
+interface Props {
     children: React.ReactNode;
 };
 
-const Layout = async ({children}:Props) => {
+const Layout = async ({ children }: Props) => {
     const queryClient = getQueryClient();
     void queryClient.prefetchQuery(
         trpc.categories.getMany.queryOptions(),
@@ -22,17 +22,17 @@ const Layout = async ({children}:Props) => {
 
     return (
         <div className="flex flex-col min-h-screen">
-            <Navbar/>
+            <Navbar />
             <HydrationBoundary state={dehydrate(queryClient)}>
-                <Suspense fallback={<SearchFiltersLoading/>}>
-                    <SearchFilters/>
+                <Suspense fallback={<SearchFiltersLoading />}>
+                    <SearchFilters />
                 </Suspense>
             </HydrationBoundary>
             <div className="flex-1 bg-[#F4F4F0]">
                 {children}
 
             </div>
-            <Footer/>
+            <Footer />
         </div>
     );
 }

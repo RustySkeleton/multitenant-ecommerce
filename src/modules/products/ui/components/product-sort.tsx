@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useProductFilters } from "../../hooks/use-product-filters"
 import { cn } from "@/lib/utils";
 
-export const ProductSort = () =>{
+export const ProductSort = () => {
     const [filters, setFilters] = useProductFilters();
 
     return (
@@ -13,11 +13,11 @@ export const ProductSort = () =>{
                 size="sm"
                 className={cn(
                     "rounded-full bg-white hover:bg-white",
-                    filters.sort!=="curated" && 
+                    filters.sort !== "curated" &&
                     "bg-transparent border-transparent hover:border-border hover:bg-transparent"
                 )}
                 variant="secondary"
-                onClick={()=>setFilters({sort:"curated"})}
+                onClick={() => setFilters({ sort: "curated" })}
             >
                 Curated
             </Button>
@@ -25,11 +25,11 @@ export const ProductSort = () =>{
                 size="sm"
                 className={cn(
                     "rounded-full bg-white hover:bg-white",
-                    filters.sort!=="trending" && 
+                    filters.sort !== "trending" &&
                     "bg-transparent border-transparent hover:border-border hover:bg-transparent"
                 )}
                 variant="secondary"
-                onClick={()=>setFilters({sort:"trending"})}
+                onClick={() => setFilters({ sort: "trending" })}
             >
                 Trending
             </Button>
@@ -38,11 +38,11 @@ export const ProductSort = () =>{
                 size="sm"
                 className={cn(
                     "rounded-full bg-white hover:bg-white",
-                    filters.sort!=="hot_and_new" && 
+                    filters.sort !== "hot_and_new" &&
                     "bg-transparent border-transparent hover:border-border hover:bg-transparent"
                 )}
                 variant="secondary"
-                onClick={()=>setFilters({sort:"hot_and_new"})}
+                onClick={() => setFilters({ sort: "hot_and_new" })}
             >
                 Hot & New
             </Button>

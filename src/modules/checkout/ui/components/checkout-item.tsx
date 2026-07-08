@@ -2,19 +2,19 @@ import Link from "next/link";
 import Image from "next/image";
 import { cn, formatCurrency } from "@/lib/utils";
 
-interface CheckoutItemProps{
-    isLast?:boolean;
-    imageUrl?:string|null;
-    name:string;
-    productUrl:string;
-    tenantUrl:string;
-    tenantName:string;
+interface CheckoutItemProps {
+    isLast?: boolean;
+    imageUrl?: string | null;
+    name: string;
+    productUrl: string;
+    tenantUrl: string;
+    tenantName: string;
 
-    price:number;
-    onRemove:()=>void;
+    price: number;
+    onRemove: () => void;
 };
 
-export const CheckoutItem=({
+export const CheckoutItem = ({
     isLast,
     imageUrl,
     name,
@@ -24,8 +24,8 @@ export const CheckoutItem=({
 
     price,
     onRemove,
-}:CheckoutItemProps)=>{
-    return(
+}: CheckoutItemProps) => {
+    return (
         <div
             className={cn(
                 "grid grid-cols-[8.5rem_1fr_auto] gap-4 pr-4 border-b",
@@ -35,7 +35,7 @@ export const CheckoutItem=({
             <div className="overflow-hidden border-r">
                 <div className="relative aspect-square h-full">
                     <Image
-                        src={imageUrl||"/placeholder.png"}
+                        src={imageUrl || "/placeholder.png"}
                         alt={name}
                         fill
                         className="object-cover"

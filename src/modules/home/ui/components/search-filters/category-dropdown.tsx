@@ -8,32 +8,32 @@ import { SubcategoryMenu } from "./subcategory-menu";
 import Link from "next/link";
 import { CategoriesGetManyOutput } from "@/modules/categories/types";
 
-interface Props{
+interface Props {
     category: CategoriesGetManyOutput[1];
-    isActive?:boolean;
-    isNavigationHovered?:boolean;
+    isActive?: boolean;
+    isNavigationHovered?: boolean;
 };
 
-export const CategoryDropDown=({
+export const CategoryDropDown = ({
     category,
     isActive,
     isNavigationHovered,
-}:Props)=>{
-    const [isOpen,setIsOpen]=useState(false);
-    const dropdownRef=useRef<HTMLDivElement>(null);
+}: Props) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
 
-    const onMouseEnter=()=>{
-        if (category.subcategories){
+    const onMouseEnter = () => {
+        if (category.subcategories) {
             setIsOpen(true);
         }
     };
-    const onMouseLeave=()=>setIsOpen(false);
+    const onMouseLeave = () => setIsOpen(false);
 
-    return(
+    return (
         <div className="relative"
-        ref={dropdownRef}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}>
+            ref={dropdownRef}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}>
             <div className="relative">
                 <Button variant="elevated"
                     className={
@@ -44,11 +44,11 @@ export const CategoryDropDown=({
                         )
                     }
                 >
-                    <Link href={`/${category.slug ==="all"?"":category.slug}`}>
-                    {category.name}
+                    <Link href={`/${category.slug === "all" ? "" : category.slug}`}>
+                        {category.name}
                     </Link>
                 </Button>
-                {category.subcategories && category.subcategories.length>0 && (
+                {category.subcategories && category.subcategories.length > 0 && (
                     <div className={cn(
                         "opacity-0 absolute -bottom-3 w-0 h-0 border-l-[10px] border-r-[10px] border-b-[10px]  border-r-transparent border-l-transparent border-b-black left-1/2 -translate-x-1/2",
                         isOpen && "opacity-100"
@@ -61,8 +61,8 @@ export const CategoryDropDown=({
                 category={category}
                 isOpen={isOpen}
             />
-            
+
         </div>
-        
+
     );
 };
