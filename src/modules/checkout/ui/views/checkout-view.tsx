@@ -19,7 +19,7 @@ interface CheckoutViewProps {
 
 export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
     const router = useRouter();
-    const [states,setStates]=useCheckoutStates();
+    const [states, setStates] = useCheckoutStates();
     const { productIds, clearAllCarts, removeProduct, clearCart } = useCart(tenantSlug);
 
     const trpc = useTRPC();
@@ -27,15 +27,15 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
         ids: productIds,
     }));
 
-    const purchase=useMutation(trpc.checkout.purchase.mutationOptions({
-        onMutate:()=>{
-            setStates({success:false, cancel: false})
+    const purchase = useMutation(trpc.checkout.purchase.mutationOptions({
+        onMutate: () => {
+            setStates({ success: false, cancel: false })
         },
-        onSuccess:(data)=>{
+        onSuccess: (data) => {
             window.location.href = data.url;
         },
-        onError:(error)=>{
-            if (error.data?.code === "UNAUTHORIZED"){
+        onError: (error) => {
+            if (error.data?.code === "UNAUTHORIZED") {
                 // TODO: Modify when subdomains enabled
                 router.push("/sign-in");
             }
@@ -43,14 +43,14 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
         },
     }));
 
-    useEffect(()=>{
-        if(states.success){
-            setStates({success:false, cancel:false});
+    useEffect(() => {
+        if (states.success) {
+            setStates({ success: false, cancel: false });
             clearCart();
             // TODO: invalidate library
             router.push("/products");
         }
-    },[states.success, clearCart, router]);
+    }, [states.success, clearCart, router]);
 
     useEffect(() => {
         if (error?.data?.code === "NOT_FOUND") {
@@ -105,7 +105,7 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
                 <div className="lg:col-span-3">
                     <CheckoutSidebar
                         total={data?.totalPrice || 0}
-                        onPurchase={() => purchase.mutate({tenantSlug,productIds})}
+                        onPurchase={() => purchase.mutate({ tenantSlug, productIds })}
                         isCanceled={states.cancel}
                         disabled={purchase.isPending}
                     />
