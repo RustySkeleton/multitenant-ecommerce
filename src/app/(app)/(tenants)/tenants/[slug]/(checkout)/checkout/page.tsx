@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import { CheckoutView } from "@/modules/checkout/ui/views/checkout-view";
 
