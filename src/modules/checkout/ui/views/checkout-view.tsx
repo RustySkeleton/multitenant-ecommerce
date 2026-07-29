@@ -47,7 +47,7 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
         if (states.success) {
             setStates({ success: false, cancel: false });
             clearCart();
-            // TODO: invalidate library
+            // TODO: invalidate library 
             router.push("/products");
         }
     }, [states.success, clearCart, router]);
