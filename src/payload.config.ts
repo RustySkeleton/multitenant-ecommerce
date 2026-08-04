@@ -17,6 +17,8 @@ import { Tenants } from './collections/Tenants'
 import { Orders } from './collections/Orders';
 import { Reviews } from './collections/Reviews';
 
+import { isSuperAdmin } from './lib/access';
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -47,7 +49,7 @@ export default buildConfig({
       tenantsArrayField: {
         includeDefaultField: false,
       },
-      userHasAccessToAllTenants: (user) => Boolean(user?.roles?.includes("super-admin"))
+      userHasAccessToAllTenants: (user) => isSuperAdmin(user),
     }),
     // storage-adapter-placeholder
   ],
