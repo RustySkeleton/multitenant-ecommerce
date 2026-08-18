@@ -1,6 +1,7 @@
 import { getPayload } from "payload";
 import config from "@payload-config";
 import dns from 'dns';
+import { stripe } from "./lib/stripe"
 
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 const categories = [
@@ -142,13 +143,15 @@ const categories = [
 const seed = async () => {
   const payload = await getPayload({ config });
 
+  const adminAccount = await stripe.accounts.create({})
+
   // Create admin tenant
   const adminTenant = await payload.create({
     collection: "tenants",
     data: {
       name: "admin",
       slug: "admin",
-      stripeAccountId: "admin",
+      stripeAccountId: adminAccount.id,
     },
   });
 
