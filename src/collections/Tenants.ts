@@ -16,6 +16,7 @@ export const Tenants: CollectionConfig = {
     {
       name: "name",
       required: true,
+      unique: true,
       type: "text",
       label: "Store Name",
       admin: {
@@ -62,6 +63,5 @@ export const Tenants: CollectionConfig = {
         description: "You cannot create products until you submit your Stripe details"
       },
     },
-
   ],
 }
